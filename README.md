@@ -10,7 +10,7 @@ First of all, note that this repository isn't synchronized with [the main Clever
 
 So, all directories, save for `python`, are not to be taken as updated.
 
-Under the `python` directory, the code listings are sorted by chapter and are named after the name used by the book (e.g., Random Search of Chapter 2 is `python/2 Stochastic Algorithms/random_search.py`). At the beginning of each file is a docstring describing the algorithm and some notes on the code listing itself. These were taken directly from the book, unless noted.
+Under the `python` directory, the code listings are sorted by chapter and are named after the name used by the book (e.g., Random Search of Chapter 2 is `python/2_Stochastic_Algorithms/random_search.py`). At the beginning of each file, I note the chapter and section in the book in which the algorithm can be found (e.g., Random Search is noted as 2.2). The docstring also contains a description the algorithm and some notes on the code listing itself. These were taken directly from the book, unless noted.
 
 # Technical Specs
 
