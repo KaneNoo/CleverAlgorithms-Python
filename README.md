@@ -6,7 +6,7 @@ The book has its own [GitHub repo](https://github.com/jbrownlee/CleverAlgorithms
 
 # File Organization
 
-First of all, note that this repository isn't synchronized with [the main Clever Algorithms repository](https://github.com/jbrownlee/CleverAlgorithms). My main purpose is in learning the algorithms in the book and transcribing them to Python; I've come to believe that implementing algorithms on your own is a good learning exercise. I'm taking the Ruby listings as pseudocode that is also the reference implementation.
+First of all, note that this repository isn't synchronized with [the main Clever Algorithms repository](https://github.com/jbrownlee/CleverAlgorithms). My main purpose is in learning the algorithms in the book and transcribing them to Python; I've come to believe that implementing algorithms on your own is a good learning exercise. I'm taking the Ruby listings as pseudocode that is also the reference implementation. In the process, I hope to familiarize myself with the algorithms and Ruby.
 
 So, all directories, save for `python`, are not to be taken as updated.
 
