@@ -1,6 +1,6 @@
 **Status:** Work-in-progress
 
-This repo contains Python ports of the code listings from [Clever Algorithms](www.cleveralgorithms.com). It is one of those rare books which tackle theory and yet present the reader with working code. How I wish more books were written like this.
+This repo contains Python ports of the code listings from [Clever Algorithms](http://www.cleveralgorithms.com). It is one of those rare books which tackle theory and yet present the reader with working code. How I wish more books were written like this.
 
 The book has its own [GitHub repo](https://github.com/jbrownlee/CleverAlgorithms), utilizing Ruby.
 
