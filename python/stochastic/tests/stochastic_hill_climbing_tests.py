@@ -2,7 +2,7 @@
 
 import re
 
-import stochastic_hill_climbing as shc
+from ..stochastic_hill_climbing import onemax, random_bitstring, random_neighbor
 
 import unittest
 
@@ -15,9 +15,9 @@ class StochasticHillClimbingTests(unittest.TestCase):
 	"""
 	
 	def test_onemax(self):
-		self.assertEqual(4, shc.onemax("1111"))
-		self.assertEqual(2, shc.onemax("0101"))
-		self.assertEqual(0, shc.onemax("0000"))
+		self.assertEqual(4, onemax("1111"))
+		self.assertEqual(2, onemax("0101"))
+		self.assertEqual(0, onemax("0000"))
 	
 	def test_random_bitstring(self):
 		"""
@@ -27,12 +27,12 @@ class StochasticHillClimbingTests(unittest.TestCase):
 		bit10 = re.compile("[01]{10}")
 		
 		for i in range(100):
-			self.assertTrue(bit10.match(shc.random_bitstring(10)))
+			self.assertTrue(bit10.match(random_bitstring(10)))
 		
 		bit8 = re.compile("[01]{8}")
 		
 		for i in range(100):
-			self.assertTrue(bit8.match(shc.random_bitstring(8)))
+			self.assertTrue(bit8.match(random_bitstring(8)))
 	
 	# TODO: test_random_bitstring_ratio
 	
@@ -40,19 +40,15 @@ class StochasticHillClimbingTests(unittest.TestCase):
 		parent = "00000000"
 		
 		for i in range(100):
-			random_neighbor = shc.random_neighbor(parent)
-			self.assertEqual(len(random_neighbor), len(parent))
-			self.assertNotEqual(random_neighbor, parent)
-			self.assertFalse(random_neighbor is parent)
+			_random_neighbor = random_neighbor(parent)
+			self.assertEqual(len(_random_neighbor), len(parent))
+			self.assertNotEqual(_random_neighbor, parent)
+			self.assertFalse(_random_neighbor is parent)
 			
 			diffs = 0
 			
-			for i in range(len(random_neighbor)):
-				if parent[i] != random_neighbor[i]:
+			for i in range(len(_random_neighbor)):
+				if parent[i] != _random_neighbor[i]:
 					diffs += 1
 			
 			self.assertEqual(1, diffs)
-	
-if __name__ == "__main__":
-	tests = unittest.TestLoader().loadTestsFromTestCase(StochasticHillClimbingTests)
-	unittest.TextTestRunner(verbosity=2).run(tests)
