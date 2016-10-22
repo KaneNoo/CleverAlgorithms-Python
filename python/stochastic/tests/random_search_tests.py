@@ -30,4 +30,8 @@ class RandomSearchTests(unittest.TestCase):
                 self.assertTrue(v < bounds[1])
                 total += v
             
-            #TODO: test with total
+            self.assertAlmostEqual(
+                bounds[0] + ((bounds[1] - bounds[0]) / 2),
+                total / trials,
+                delta=0.1
+            )
