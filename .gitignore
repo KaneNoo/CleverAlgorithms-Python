@@ -3,4 +3,14 @@ deprecated/*
 web/*
 workspace/*
 src/*
+*.py~
 *.pyc
+*/__pycache__/*
+*.sw?
+*~
+*.out
+*.log
+*.log.*
+*.bak
+dist/
+build/
