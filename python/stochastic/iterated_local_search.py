@@ -1,7 +1,6 @@
 #! usr/bin/env python3
 
 import math
-
 import random
 
 """
@@ -16,10 +15,10 @@ solution, the result of which is refined using an embedded
 heuristic.
 
 The code listing applies the algorithm to the Berlin52 instance
-of the Traveling Salesman Problem, taken from TSPLIB. The optimal
-tour distance for the Berlin52 instance is 7542 units.
-
-@author Chad Estioco
+of the Traveling Salesman Problem, taken from TSPLIB. The problem seeks a
+permutation of the order to visit cities (called a tour) that minimizes the
+total distance traveled. The optimal tour distance for the Berlin52 instance is
+7542 units.
 """
 
 def euc_2d(c1, c2):
