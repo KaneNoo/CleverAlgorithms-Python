@@ -1,7 +1,8 @@
 #! usr/bin/env python3
 
-import math
+from .common import euc_2d
 
+import math
 import random
 
 """
@@ -20,12 +21,6 @@ solutions with featured present in the discovered local optima.
 This implementation applies Guided Local Search to the Berlin52
 instance of TSP from TSPLIB.
 """
-
-def euc_2d(c1, c2):
-	"""
-	Same as the one in 2.5
-	"""
-	return math.sqrt(((c1[0] - c2[0]) ** 2) + ((c1[1] - c2[1]) ** 2))
 
 def random_permutation(cities):
 	"""

@@ -1,5 +1,7 @@
 #! usr/bin/env python3
 
+from .common import euc_2d
+
 import math
 import random
 
@@ -20,9 +22,6 @@ permutation of the order to visit cities (called a tour) that minimizes the
 total distance traveled. The optimal tour distance for the Berlin52 instance is
 7542 units.
 """
-
-def euc_2d(c1, c2):
-    return math.sqrt(((c1[0] - c2[0]) ** 2) + ((c1[1] - c2[1]) ** 2))
 
 def cost(permutation, cities):
     distance = 0
