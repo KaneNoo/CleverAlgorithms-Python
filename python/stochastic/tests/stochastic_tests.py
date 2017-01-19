@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-from ..stochastic import euc_2d
+from ..common import euc_2d
 
 import math
 import unittest
