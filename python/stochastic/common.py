@@ -35,10 +35,7 @@ def path_cost(permutation, cities):
     limit = len(permutation)
 
     for i in range(limit):
-        if i == (limit - 1):
-            c2 = 0
-        else:
-            c2 = i + 1
+        c2 = permutation[(i + 1) % limit]
         distance += euc_2d(cities[permutation[i]], cities[c2])
 
     return distance
