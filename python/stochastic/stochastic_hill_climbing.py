@@ -21,8 +21,6 @@ number of bits in a given string.
 Implementation notes:
 The reference implementation uses a list of (one-character) strings.
 I opted to use a String object directly.
-
-@author Chad Estioco
 """
 
 def onemax(vector):

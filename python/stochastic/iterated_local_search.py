@@ -1,6 +1,6 @@
 #! usr/bin/env python3
 
-from .common import euc_2d
+from .common import path_cost, random_permutation
 
 import math
 import random
@@ -22,29 +22,6 @@ permutation of the order to visit cities (called a tour) that minimizes the
 total distance traveled. The optimal tour distance for the Berlin52 instance is
 7542 units.
 """
-
-def cost(permutation, cities):
-    distance = 0
-    limit = len(permutation)
-    
-    for i in range(limit):
-        if i == (limit - 1):
-            c2 = permutation[0]
-        else:
-            c2 = permutation[i + 1]
-        
-        distance += euc_2d(cities[permutation[i]], cities[c2])
-    
-    return distance
-
-def random_permutation(cities):
-    perm = [i for i in range(len(cities))]
-    
-    for i in perm:
-        r = random.randint(0, len(perm) - 1 - i) + i
-        perm[r], perm[i] = perm[i], perm[r]
-    
-    return perm
 
 def stochastic_two_opt(permutation):
     perm = [permutation[i] for i in range(len(permutation))]
@@ -81,7 +58,7 @@ def local_search(best, cities, max_no_improv):
     while count < max_no_improv:
         candidate = {}
         candidate["vector"] = stochastic_two_opt(best["vector"])
-        candidate["cost"] = cost(candidate["vector"], cities)
+        candidate["cost"] = path_cost(candidate["vector"], cities)
         
         if candidate["cost"] < best["cost"]:
             count = 0
@@ -104,13 +81,13 @@ def double_bridge_move(perm):
 def perturbation(cities, best):
     candidate = {}
     candidate["vector"] = double_bridge_move(best["vector"])
-    candidate["cost"] = cost(candidate["vector"], cities)
+    candidate["cost"] = path_cost(candidate["vector"], cities)
     return candidate
 
 def search(cities, max_iterations, max_no_improv):
     best = {}
     best["vector"] = random_permutation(cities)
-    best["cost"] = cost(best["vector"], cities)
+    best["cost"] = path_cost(best["vector"], cities)
     best = local_search(best, cities, max_no_improv)
     
     for i in range(max_iterations):    

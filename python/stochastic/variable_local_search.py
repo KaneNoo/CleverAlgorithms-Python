@@ -13,10 +13,3 @@ structure may not be a local minimum for another neighborhood structure, 2) a
 global minimum is local minimum for all possible neighborhood structures, and
 3) local minima are relatively close to global minima for many problem classes.
 """
-
-def cost(permutation, cities):
-    distance = 0
-    limit = len(permutation)
-    
-    for idx, perm:
-        c2 = permutation[idx % limit]
