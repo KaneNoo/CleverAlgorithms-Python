@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-from .common import cost, random_permutation
+from .common import path_cost, random_permutation
 
 import random
 
@@ -40,7 +40,7 @@ def local_search(best, cities, max_no_improv, neighborhood_size):
         for _ in range(neighborhood_size):
             stochastic_two_opt(candidate["vector"])
 
-        candidate["cost"] = cost(candidate["vector"], cities)
+        candidate["cost"] = path_cost(candidate["vector"], cities)
 
         if candidate["cost"] < best["cost"]:
             count, best = 0, candidate
@@ -52,18 +52,18 @@ def local_search(best, cities, max_no_improv, neighborhood_size):
 def search(cities, neigborhoods, max_no_improv, max_no_improv_ls):
     best = {}
     best["vector"] = random_permutation(cities)
-    best["cost"] = cost(best["vector"], cities)
+    best["cost"] = path_cost(best["vector"], cities)
     iter_, count = 0, 0
 
     while count < max_no_improv:
-        for neigh in negihborhoods:
+        for neigh in neighborhoods:
             candidate = {}
             candidate["vector"] = [v for v in best["vector"]]
 
             for _ in range(neigh):
                 stochastic_two_opt(candidate["vector"])
 
-            candidate["cost"] - cost(candidate["vector"], cities)
+            candidate["cost"] = path_cost(candidate["vector"], cities)
             candidate = local_search(candidate, cities, max_no_improv_ls, neigh)
             print("> iteration #%s, neigh=%s, best=%s" % (iter_ + 1, neigh, best["cost"]))
             iter_ += 1
@@ -71,3 +71,16 @@ def search(cities, neigborhoods, max_no_improv, max_no_improv_ls):
             if candidate["cost"] < best["cost"]:
                 best, count = candidate, 0
                 print("New best, restarting neighborhood search")
+                break
+            else:
+                count += 1
+
+    return best
+
+if __name__ == "__main__":
+    from .common import berlin52
+    max_no_improv = 50
+    max_no_improv_ls = 70
+    neighborhoods = list(range(20))
+    best = search(berlin52, neighborhoods, max_no_improv, max_no_improv_ls)
+    print("Done. Best Solution: c=%s, v=%s" % (best["cost"], best["vector"]))
