@@ -14,3 +14,4 @@ src/*
 *.bak
 dist/
 build/
+stats/
