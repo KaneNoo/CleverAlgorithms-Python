@@ -59,11 +59,11 @@ if __name__ == "__main__":
     
     # algorithm configuration
     max_iter = 100
+    show_log = decide()
+    best = search(search_space, max_iter, show_log)
     
     # execute the algorithm
-    if decide():
-        best = search(search_space ,max_iter)
+    if show_log:
         print("Done. Best Solution: cost = " + str(best['cost']) + ", v = " + str(best['vector']))
     else:
-        best = search(search_space, max_iter, False)
         print(best["cost"])

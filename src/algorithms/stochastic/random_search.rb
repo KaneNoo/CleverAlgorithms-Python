@@ -3,6 +3,7 @@
 # The Clever Algorithms Project: http://www.CleverAlgorithms.com
 # (c) Copyright 2010 Jason Brownlee. Some Rights Reserved. 
 # This work is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License.
+require_relative "../switch.rb"
 
 def objective_function(vector)
   return vector.inject(0) {|sum, x| sum + (x ** 2.0)}
@@ -14,14 +15,16 @@ def random_vector(minmax)
   end
 end
 
-def search(search_space, max_iter)
+def search(search_space, max_iter, show_log=true)
   best = nil
   max_iter.times do |iter|
     candidate = {}
     candidate[:vector] = random_vector(search_space)
     candidate[:cost] = objective_function(candidate[:vector])
     best = candidate if best.nil? or candidate[:cost] < best[:cost]
-    puts " > iteration=#{(iter+1)}, best=#{best[:cost]}"
+    if show_log
+      puts " > iteration=#{(iter+1)}, best=#{best[:cost]}"
+    end
   end
   return best
 end
@@ -32,7 +35,14 @@ if __FILE__ == $0
   search_space = Array.new(problem_size) {|i| [-5, +5]}
   # algorithm configuration
   max_iter = 100
+  show_log = decide()
   # execute the algorithm
-  best = search(search_space, max_iter)
-  puts "Done. Best Solution: c=#{best[:cost]}, v=#{best[:vector].inspect}"
+  best = search(search_space, max_iter, show_log)
+
+  if show_log
+    puts "Done. Best Solution: c=#{best[:cost]}, v=#{best[:vector].inspect}"
+  else
+    puts best[:cost]
+  end
+
 end
