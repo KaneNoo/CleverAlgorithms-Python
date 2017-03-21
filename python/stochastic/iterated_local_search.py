@@ -24,6 +24,11 @@ total distance traveled. The optimal tour distance for the Berlin52 instance is
 """
 
 def stochastic_two_opt(permutation):
+    """
+    Looks for a random subsequence in the permutation and reverses them.
+
+    See also: https://en.wikipedia.org/wiki/2-opt
+    """
     perm = [permutation[i] for i in range(len(permutation))]
     upper_bound = len(perm) - 1
     c1, c2 = random.randint(0, upper_bound), random.randint(0, upper_bound)
@@ -70,7 +75,11 @@ def local_search(best, cities, max_no_improv):
     
     return best
 
-def double_bridge_move(perm):    
+def double_bridge_move(perm):
+    """
+    Partitions the permutation into 4 subsequences and then shuffles those
+    subsequences to create a new permutation.
+    """
     pos1 = 1 + random.randint(0, math.floor(len(perm) / 4))
     pos2 = pos1 + 1 + random.randint(0, math.floor(len(perm) / 4))
     pos3 = pos2 + 1 + random.randint(0, math.floor(len(perm) / 4))
