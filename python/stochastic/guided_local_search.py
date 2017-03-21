@@ -111,7 +111,13 @@ def local_search(current, cities, penalties, max_no_improv, l):
         if count >= max_no_improv:
             return current
 
-def calculate_feature_utilities(penal, cities, permutation):
+def calculate_feature_utilities(penalties, cities, permutation):
+    """
+    For every edge in the path, compute its utility, defined as the cost of the
+    edge / (1 + existing penalty for edge).
+
+    Note: The utility is defined per origin node of every edge.
+    """
     limit = len(permutation)
     limit_list = range(limit)
     utilities = [0 for i in limit_list]
@@ -127,11 +133,15 @@ def calculate_feature_utilities(penal, cities, permutation):
         if c2 < c1:
             c1, c2 = c2, c1
         
-        utilities[i] = euc_2d(cities[c1], cities[c2]) / (1 + penal[c1][c2])
+        utilities[i] = euc_2d(cities[c1], cities[c2]) / (1 + penalties[c1][c2])
     
     return utilities
 
 def update_penalties(penalties, cities, permutation, utilities):
+    """
+    Penalize an edge if the utility for its origin is the greatest utility value
+    in this round.
+    """
     max_util = max(utilities)
     limit = len(permutation)
     
