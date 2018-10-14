@@ -4,6 +4,7 @@ from .common import path_cost, random_permutation
 
 import math
 import random
+import sys
 
 """
 2.5
@@ -93,7 +94,7 @@ def perturbation(cities, best):
     candidate["cost"] = path_cost(candidate["vector"], cities)
     return candidate
 
-def search(cities, max_iterations, max_no_improv):
+def search(cities, max_iterations, max_no_improv, output_format="human"):
     best = {}
     best["vector"] = random_permutation(cities)
     best["cost"] = path_cost(best["vector"], cities)
@@ -106,7 +107,10 @@ def search(cities, max_iterations, max_no_improv):
         if candidate["cost"] < best["cost"]:
             best = candidate
         
-        print("Iteration #" + str(i) + " best = " + str(best["cost"]))
+        if output_format == "csv":
+            print("%s,%s" % (i, best["cost"]))
+        else:
+            print("Iteration #" + str(i) + " best = " + str(best["cost"]))
     
     return best
 
@@ -116,7 +120,15 @@ if __name__ == "__main__":
     # Algorithm configuration
     max_iterations = 100
     max_no_improv = 50
+    output_format = "human"
+
+    if len(sys.argv) >= 2:
+        output_format = sys.argv[1]
     
     # Execute the algorithm
-    best = search(berlin52, max_iterations, max_no_improv)
-    print("Done. Best solution: c = " + str(best["cost"]) +", v = " + str(best["vector"]))
+    best = search(berlin52, max_iterations, max_no_improv, output_format)
+
+    if output_format == "csv":
+        print("%s,%s" % (best["cost"], ",".join([str(i) for i in best["vector"]])))
+    else:
+        print("Done. Best solution: c = " + str(best["cost"]) +", v = " + str(best["vector"]))
