@@ -1,10 +1,10 @@
 #! usr/bin/env python3
 
 from .common import path_cost, random_permutation
+from ..switch import decide
 
 import math
 import random
-import sys
 
 """
 2.5
@@ -120,10 +120,7 @@ if __name__ == "__main__":
     # Algorithm configuration
     max_iterations = 100
     max_no_improv = 50
-    output_format = "human"
-
-    if len(sys.argv) >= 2:
-        output_format = sys.argv[1]
+    output_format = decide()
     
     # Execute the algorithm
     best = search(berlin52, max_iterations, max_no_improv, output_format)
