@@ -3,7 +3,6 @@
 from ..switch import decide
 
 import random
-import sys
 
 """
 2.2
