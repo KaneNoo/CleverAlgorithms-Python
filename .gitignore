@@ -2,7 +2,6 @@ book/*
 deprecated/*
 web/*
 workspace/*
-src/*
 *.py~
 *.pyc
 */__pycache__/*

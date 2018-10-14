@@ -1,5 +1,4 @@
 # Iterated Local Search algorithm in the Ruby Programming Language
-
 # The Clever Algorithms Project: http://www.CleverAlgorithms.com
 # (c) Copyright 2010 Jason Brownlee. Some Rights Reserved. 
 # This work is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 2.5 Australia License.
@@ -65,7 +64,7 @@ def perturbation(cities, best)
   return candidate
 end
 
-def search(cities, max_iterations, max_no_improv)
+def search(cities, max_iterations, max_no_improv, output_format="human")
   best = {}
   best[:vector] = random_permutation(cities)
   best[:cost] = cost(best[:vector], cities)
@@ -74,7 +73,11 @@ def search(cities, max_iterations, max_no_improv)
     candidate = perturbation(cities, best)
     candidate = local_search(candidate, cities, max_no_improv)
     best = candidate if candidate[:cost] < best[:cost]
-    puts " > iteration #{(iter+1)}, best=#{best[:cost]}"
+    if output_format == "csv" then
+        puts "#{(iter + 1)},#{best[:cost]}"
+    else # The default
+        puts " > iteration #{(iter+1)}, best=#{best[:cost]}"
+    end
   end
   return best
 end
@@ -93,7 +96,17 @@ if __FILE__ == $0
   # algorithm configuration
   max_iterations = 100
   max_no_improv = 50
+
+  output_format = "human"
+  if $*.length >= 1 then
+    output_format = "csv"
+  end
+
   # execute the algorithm
-  best = search(berlin52, max_iterations, max_no_improv)
-  puts "Done. Best Solution: c=#{best[:cost]}, v=#{best[:vector].inspect}"
+  best = search(berlin52, max_iterations, max_no_improv, output_format)
+  if output_format == "csv" then
+    puts "#{best[:cost]},#{best[:vector].join(",")}"
+  else
+    puts "Done. Best Solution: c=#{best[:cost]}, v=#{best[:vector].inspect}"
+  end
 end

@@ -1,5 +1,13 @@
 #! /usr/bin/env python3
 
+"""
+This script assumes that all the demo scripts can be ran with a csv flag which
+will output the log trace as CSV (to stdout).
+
+It further assumes that the last line of the CSV output is some kind of
+description about the best solution arrived at.
+"""
+
 import subprocess
 import sys
 
