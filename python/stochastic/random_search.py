@@ -36,7 +36,7 @@ def random_vector(minmax):
     
     return random_vector
 
-def search(search_space, max_iter, show_log=True):
+def search(search_space, max_iter, output_format="human"):
     best = None
     
     for i in range(max_iter):
@@ -47,7 +47,9 @@ def search(search_space, max_iter, show_log=True):
         if best is None or candidate['cost'] < best['cost']:
             best = candidate
         
-        if show_log:
+        if output_format == "csv":
+            print("%s,%s" % (i, best["cost"]))
+        else:
             print("Iteration " + str(i) + ": best = " + str(best['cost']))
     
     return best
@@ -59,11 +61,10 @@ if __name__ == "__main__":
     
     # algorithm configuration
     max_iter = 100
-    show_log = decide()
-    best = search(search_space, max_iter, show_log)
+    output_format = decide()
+    best = search(search_space, max_iter, output_format)
     
-    # execute the algorithm
-    if show_log:
-        print("Done. Best Solution: cost = " + str(best['cost']) + ", v = " + str(best['vector']))
+    if output_format == "csv":
+        print("%s,%s" % (best["cost"], ",".join([str(i) for i in best["vector"]])))
     else:
-        print(best["cost"])
+        print("Done. Best Solution: cost = " + str(best['cost']) + ", v = " + str(best['vector']))
