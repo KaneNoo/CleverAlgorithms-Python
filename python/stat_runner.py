@@ -8,6 +8,8 @@ It further assumes that the last line of the CSV output is some kind of
 description about the best solution arrived at.
 """
 
+from argparse import ArgumentParser
+
 import os
 import subprocess
 import sys
@@ -77,12 +79,23 @@ class StatRunner(object):
         print("Done. Find stats in %s" % self.__make_data_dir_path())
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python3 %s <script.path> <iters>" % __file__)
-        exit(1)
+    parser = ArgumentParser(description="Run and gather stats for Clever Algorithms")
+    parser.add_argument(
+        "script-path", nargs=1, type=str,
+        help="The script to run. Use package.notation for Python scripts and directory/notation for Ruby scripts."
+    )
+    parser.add_argument(
+        "--limit", "-l", required=True, type=int, default=100,
+        help="The number of iterations to run the script."
+    )
+    parser.add_argument(
+        "--encoding", "-e", required=False, type=str, default="utf-8",
+        help="The expected encoding of the script output."
+    )
+    args = vars(parser.parse_args())
 
-    limit = int(sys.argv[2])
-    script_path = sys.argv[1]
+    limit = int(args["limit"])
+    script_path = args["script-path"][0]
 
-    runner = StatRunner(script_path)
+    runner = StatRunner(script_path, output_encoding=args["encoding"])
     runner.gather_stats(limit)
