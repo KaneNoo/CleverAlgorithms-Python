@@ -29,7 +29,7 @@ class StatRunner(object):
         if not os.path.isdir(stats_dir) and not os.path.isfile(stats_dir):
             print("stats directory does not exist, creating...")
             os.mkdir(stats_dir)
-        self.__ensure_data_dir_exists()
+        self.__ensure_data_dir_state()
 
     def __determine_runner(self):
         dot_split = self.script_path.split(os.extsep)
@@ -45,7 +45,7 @@ class StatRunner(object):
     def __make_data_dir_name(self):
         parsed_path = []
         if self.runner == "python3":
-            parsed_path = self.script_path.split(".")
+            parsed_path = self.script_path.split(".")[1:]
         else:
             parsed_path = self.script_path.split(os.path.sep)
     
@@ -54,7 +54,7 @@ class StatRunner(object):
     def __make_data_dir_path(self):
         return os.path.join(os.curdir, "stats", self.__make_data_dir_name())
     
-    def __ensure_data_dir_exists(self):
+    def __ensure_data_dir_state(self):
         data_dir_path = self.__make_data_dir_path()
         if not os.path.isdir(data_dir_path) and not os.path.isfile(data_dir_path):
             print("data dir for %s does not exist, creating..." % self.script_path)
