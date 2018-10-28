@@ -16,11 +16,17 @@ import sys
 
 class StatRunner(object):
     
-    def __init__(self, script_path, output_encoding="utf-8"):
+    def __init__(self, script_path, output_encoding="utf-8", no_overwrite=False):
+        """
+        Defaults:
+            - we assume that script output is encoded as utf-8
+            - if we encounter a data dump of the same name, we just overwrite it
+        """
         self.script_path = script_path
         self.runstring = self.__determine_runner()
         self.runner = self.runstring[0]
         self.output_encoding = output_encoding
+        self.no_overwrite = no_overwrite
 
         self.__setup()
 
@@ -62,6 +68,14 @@ class StatRunner(object):
     
     def __write_data_dump(self, runner, script_path, fname, dump):
         data_fname = os.path.join(self.__make_data_dir_path(), fname)
+        
+        if os.path.isfile(data_fname) and self.no_overwrite:
+            print(
+                "Dump with filename %s exists and we are not set to overwrite." % data_fname,
+                file=sys.stderr
+            )
+            return
+
         with open(data_fname, "w+") as data:
             data.write(dump)
 
@@ -92,10 +106,16 @@ if __name__ == "__main__":
         "--encoding", "-e", required=False, type=str, default="utf-8",
         help="The expected encoding of the script output."
     )
+    parser.add_argument(
+        "--no-overwrite", action="store_true",
+        help="If present, terminate if a data dump of the same name is present."
+    )
     args = vars(parser.parse_args())
 
     limit = int(args["limit"])
     script_path = args["script-path"][0]
 
-    runner = StatRunner(script_path, output_encoding=args["encoding"])
+    runner = StatRunner(
+        script_path, output_encoding=args["encoding"], no_overwrite=args["no_overwrite"]
+    )
     runner.gather_stats(limit)
